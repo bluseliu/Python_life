@@ -1,0 +1,45 @@
+# Python程式練習：搭電梯
+
+from time import sleep
+
+now_at = int(1)
+
+print('現在位置：', now_at, '樓',)
+sleep(0.5)
+
+while True:
+    floor = int(input('請輸入您要前往的樓層(1~7, 0為結束)：'))
+    
+    if floor > 7 or floor < 0:
+        print('範圍為1~7，請重新輸入！')
+        continue
+        
+    elif floor == 0:
+        print('結束')
+        break
+        
+    else:
+        if floor > now_at:
+            sys.stdout.write('\r 關門中... 電梯上樓... %c' %(0))
+            sys.stdout.flush()
+            
+            for  i in range(now_at, floor):
+                sleep(2)
+                sys.stdout.write('\r 目前樓層: %d          ' %(now_at + 1))
+                sys.stdout.flush()
+                now_at = i + 1
+
+        elif floor < now_at:
+            sys.stdout.write('\r 關門中... 電梯下樓... %c' %(0))
+            sys.stdout.flush()
+            
+            for  i in range(now_at, floor, -1):
+                sleep(2)
+                sys.stdout.write('\r 目前樓層: %d          ' %(now_at - 1))
+                sys.stdout.flush()
+                now_at = i - 1
+
+    sys.stdout.write('\r 已到達: %d 樓' %(now_at))
+    sys.stdout.flush()
+
+    sleep(2)
