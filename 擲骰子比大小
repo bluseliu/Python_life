@@ -1,0 +1,59 @@
+# Python程式練習：擲骰子比大小
+
+import random
+
+dice = []
+for num in range(1,5):
+    dice.append(random.randint(1,6))
+    dice_result = list(dice)
+
+print('擲骰結果: ', dice_result)
+
+result_set = set(dice_result) # 將擲骰結果轉為set
+result_set_list = list(result_set) # 將set轉為list
+
+# 無點
+if len(result_set) == 4:
+    print('無點，請重骰')
+
+# 二顆相同，計算點數
+elif len(result_set) == 3:
+    if dice_result.count(int(result_set_list[0])) == 2:
+        compare = result_set_list[1] + result_set_list[2]
+        print('點數: ', compare)
+    elif dice_result.count(int(result_set_list[1])) == 2:
+        compare = result_set_list[0] + result_set_list[2]
+        print('點數: ', compare)
+    else:
+        compare = result_set_list[0] + result_set_list[1]
+        print('點數: ', compare)
+
+# 無點
+elif len(result_set) == 2:
+    if dice_result.count(int(dice_result[0])) == 3 or dice_result.count(int(dice_result[1])) == 3:
+        print('無點，請重骰')
+
+# 二組相同
+    elif result_set_list.count(int(dice_result[0])) > result_set_list.count(int(dice_result[1])):
+        compare = result_set_list[0] * 2
+        print('點數: ', compare)
+
+    else:
+        compare = result_set_list[1] * 2
+        print('點數: ', compare)
+
+# 豹子
+else:
+    compare = result_set * 2
+    print('豹子! 可能會贏喔!')
+    
+    
+"""
+# 二人擲骰子，比點數大小
+# 規則：
+# 計點方式：先扣除2顆點數相同的骰子，其餘2顆點數合計即為其所得點數
+# 若有兩組骰子點數相同，則以點數較大者之合計為其所得點數
+# 若有3顆骰子相同且另一顆不同，必須重擲
+# 若4顆擲骰子的點數均不相同，稱為「無點」，必須重擲
+# 若4顆骰子均相同，稱為「豹子」，二人比較點數
+"""
