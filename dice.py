@@ -1,0 +1,77 @@
+import random
+
+A = input('請輸入第一位玩家姓名:')
+B = input('請輸入第二位玩家姓名:')
+players = [A, B]
+a = 0
+b = 0
+
+print()
+for n in range(0,len(players)):
+    print('請玩家', players[n], '按Enter擲骰', end='')
+    input('...')
+    print('擲骰結果:')
+    start = []
+    while start == []:
+        start = [random.randint(1,6), random.randint(1,6),random.randint(1,6), random.randint(1,6)]
+        print(start, end='')
+        start_set = set(start)
+        start_set_list = list(start_set)
+
+        if len(start_set_list) == 4:
+            input(' 無點(4顆全不同)，請按Enter重骰...')
+            compare = [0, 0]
+            start = []
+
+        elif len(start_set_list) == 2:
+            # print('len=2')
+            if (start.count(start_set_list[0])) == 3 or (start.count(start_set_list[1])) == 3:
+                input(' 無點(3顆相同)，請按Enter重骰...')
+                start = []
+            else:
+                compare = start_set_list[1], start_set_list[1]
+                point = compare[0] + compare[1]
+
+        elif len(start_set_list) == 3:
+            # print('len=3')
+            compare = list(x for x in start if start.count(x) == 1)
+            point = compare[0] + compare[1]
+
+        else:
+            # print('len=1')
+            compare = start_set_list[0], start_set_list[0]
+            point = compare[0] + compare[1]
+            print(' 豹子')
+
+    print(' 點數:', point)
+    while a == 0:
+        a = point
+        player_A = players[n]
+        print()
+    b = point
+    player_B = players[n]
+
+print()
+input('請按Enter看最後結果...')
+print('[最後結果]', player_A, ':', a, '點   ', player_B, ':', b, '點')
+if a > b:
+    print(player_A, '贏!')
+else:
+    print(player_B, '贏!')
+
+
+"""
+簡易版:
+players = ['A', 'B']
+a = 0
+b = 0
+
+for n in range(0,len(players)):
+    start = [random.randint(1, 6), random.randint(1, 6)]
+    point = start[0] + start[1]
+
+    while a == 0:
+        a = point
+    b = point
+print(a, b)
+"""
